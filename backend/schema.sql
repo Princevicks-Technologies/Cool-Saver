@@ -1,0 +1,37 @@
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  walletAddress TEXT UNIQUE NOT NULL,
+  pkh TEXT NOT NULL,
+  email TEXT NOT NULL,
+  createdAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS vault_metadata (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  vaultRef TEXT UNIQUE NOT NULL,
+  ownerPkh TEXT NOT NULL,
+  isPublic INTEGER NOT NULL DEFAULT 0,
+  purposeLabel TEXT,
+  beneficiary TEXT,
+  mode INTEGER NOT NULL,
+  policy INTEGER NOT NULL,
+  target TEXT NOT NULL,
+  unlockTime TEXT NOT NULL,
+  createdAt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS unlock_subscriptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  vaultRef TEXT NOT NULL,
+  email TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  UNIQUE(vaultRef, email)
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  vaultRef TEXT NOT NULL,
+  type TEXT NOT NULL,
+  sentAt TEXT NOT NULL,
+  UNIQUE(vaultRef, type)
+);
